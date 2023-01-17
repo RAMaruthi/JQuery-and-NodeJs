@@ -1,0 +1,193 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./minilib.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        .jumbotron {
+            padding: 50px;
+            margin: 25px;
+            font-size: 40pt;
+            color: aqua;
+            background-color: beige;
+            text-align: center;
+        }
+    </style>
+    <script>
+        const url = "http://localhost:3000/Books";
+        function createRow(Book) {
+            const row = `<tr class="bg-danger "><td>${Book.id}
+            <td>${Book.bookTitle}</td>
+            <td>${Book.price}</td>
+            <td>${Book.author}</td>
+            <td><a class="edit" info="${Book.id}"/>Edit</td>;
+            <td><a class="delet" infos="${Book.id}"/>Delet</td></tr>`;
+            return row;
+        }
+
+        function getAll() {
+            $("table").find("tr:gt(0)").remove();
+            $.get(url, function (data) {
+                for (const bk of data) {
+                    let row = createRow(bk);
+                    $("table").append(row);
+                }
+                $(".edit").click(function () {
+                    const id = $(this).attr("info");
+                    displayBook(id);
+                })
+                $(".delet").click(function () {
+                    const id = $(this).attr("infos");
+                    deleteId(id);
+                })
+            })
+        }
+        function displayBook(id) {
+            const temp = `${url}/${id}`
+            $.get(temp, (foundBook) => {
+                $("#txtIds").val(foundBook.id);
+                $("#txtTitles").val(foundBook.bookTitle);
+                $("#txtPrices").val(foundBook.price);
+                $("#txtAuthors").val(foundBook.author);
+            })
+        }
+
+        function deleteId(id){
+            console.log(id);
+            const temp = `${url}/${id}`
+            $.ajax({
+                "method": "DELETE",
+                "url": temp,
+                "success": function (data) {
+                    alert("Book is Deleted");
+                    getAll();
+            
+                }
+               
+        })
+        
+    }
+
+        function addRecord() {
+            const postData = {};
+            postData.id = parseInt($("#txtId").val());
+            postData.bookTitle = $("#txtTitle").val();
+            postData.price = $("#txtPrice").val();
+            postData.author = $("#txtAuthor").val();
+            $.post(url, postData, function (data) {
+                const msg = `The book ${data.bookTitle} is added`
+                alert(msg)
+                getAll();
+            })
+        }
+        function upDate(id) {
+            const putData = {};
+            putData.id = parseInt($("#txtIds").val());
+            putData.bookTitle = $("#txtTitles").val();
+            putData.price = $("#txtPrices").val();
+            putData.author = $("#txtAuthors").val();
+            const tempUrl = url + "/" + putData.id
+            $.ajax({
+                "method": "PUT",
+                "url": tempUrl,
+                "data": putData,
+                "success": function (data) {
+                    alert(JSON.stringify(data));
+                }
+            })
+            getAll();
+        }
+
+
+        $().ready(function () {
+            $("button:first").click(getAll);
+            $("#btn").click(addRecord);
+            $("#btns").click(upDate);
+
+
+
+
+        })
+
+
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 class="jumbotron">Book store App!</h1>
+    <hr>
+    <button>Show</button>
+    <section>
+
+        <div class="container container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <header>
+                        <h2 class="h2">Books with Us!!!</h2>
+                        <hr>
+                    </header>
+                    <div>
+                        <table class="table table-bordered table-striped table-hover" border="1">
+                            <tr>
+                                <th>Book ID</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Cost</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <header>
+                        <h2> Add New Book</h2>
+                        <hr>
+                    </header>
+                    <div>
+                        <p id="">
+                            Enter the ID: <input placeholder="ID of the Book" id="txtId" />
+                        </p>
+                        <p>
+                            Enter the Title: <input placeholder="Title" id="txtTitle" />
+                        </p>
+                        <p>
+                            Enter the Author: <input placeholder="Author" id="txtPrice" />
+                        </p>
+                        <p>
+                            Enter the Price: <input placeholder="Price" id="txtAuthor" />
+                        </p>
+                        <p>
+                            <button class="btn btn-primary" id="btn">Add Book</button>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <header>
+                            <h2> Update Book</h2>
+                            <hr>
+                        </header>
+                        <div>
+                            <p id="">
+                                Enter the ID: <input placeholder="ID of the Book" id="txtIds" d />
+                            </p>
+                            <p>
+                                Enter the Title: <input placeholder="Title" id="txtTitles" />
+                            </p>
+                            <p>
+                                Enter the Author: <input placeholder="Author" id="txtPrices" />
+                            </p>
+                            <p>
+                                Enter the Price: <input placeholder="Price" id="txtAuthors" />
+                            </p>
+                            <p>
+                                <button class="btn btn-danger" id="btns">Update</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</body>
+
+</html>

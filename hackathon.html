@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./minilib.js"></script>
+    <script src="./hackathon.js"></script>
+    <title>Hackathon</title>
+    <script>
+        $().ready(function(){
+            $("button").click(function(){
+                const stringInput = $("#string").val()
+               
+                encrypt(stringInput)
+                const ans = result.slice(0,-1)
+               
+                
+                $("span").text(ans)
+                result = ""
+            })
+        })   
+    </script>
+</head>
+<body>
+<center>
+    
+    <header>
+        <h1> Encryption</h1>
+        <hr>
+    </header>
+
+    <section>
+        <label for="string"></label>
+        <input type="text" id="string">
+        <button>submit</button>
+    </section>
+
+    <section>
+        
+        <span></span>
+</center>
+    </section>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "empName": "Phaniraj",
+      "empAddress": "Bangalore",
+      "empSalary": 45000
+    },
+    {
+      "id": 2,
+      "empName": "Ramesh",
+      "empAddress": "Bangalore",
+      "empSalary": 45000
+    },
+    {
+      "id": 3,
+      "empName": "Suraj",
+      "empAddress": "Bangalore",
+      "empSalary": 45000
+    },
+    {
+      "id": 4,
+      "empName": "Gopal",
+      "empAddress": "Bangalore",
+      "empSalary": 45000
+    },
+    {
+      "id": 5,
+      "empName": "Sam",
+      "empAddress": "Bangalore",
+      "empSalary": 45000
+    },
+    {
+      "id": "7",
+      "empName": "NewName",
+      "empAddress": "NewAddress",
+      "empSalary": "45000"
+    }
+  ]
+}
